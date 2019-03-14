@@ -18,12 +18,13 @@
 #include "Tag36h9.h"
 #include "Tag36h11.h" 
 
-#include "vision_defs.h"
+#include "landing_vision_defs.h"
+
+#include <condition_variable>
+#include <mutex>
 
 using namespace std;
 #define COMMENT_CHAR '#'
-
-
 
 #ifndef PI
 const double PI = 3.14159265358979323846;
@@ -33,12 +34,12 @@ inline double standardRad(double t);
 void wRo_to_euler(const Eigen::Matrix3d& wRo, double& yaw, double& pitch, double& roll);
 class AprilTag
 {
+public:
 	AprilTags::TagDetector* m_tagDetector;
 	AprilTags::TagCodes m_tagCodes;
 	const char* windowName = "apriltags_demo";
 
 	clock_t startTime, endTime;
-	bool m_draw; // draw image and April tag detections?
 	//  bool m_arduino; // send tag detections to serial port?
 	bool m_timing; // print timing information for each tag extraction call
 
@@ -79,10 +80,12 @@ public:
 		m_gain(-1),
 		m_brightness(-1),
 
-		m_deviceId(0)
+		m_deviceId(0),
+
+		be_processing(false)
 	{}
-	vector<vision_defs::land_mark_pos> pos_vec;
-	void parseOptions(int argc, char* argv[]);
+	vector<landing_vision_defs::land_mark_pos> pos_vec;
+	void parseOptions(int argc = 0, char* argv[] = nullptr);
 	void setup();
 	int loadImages(cv::Mat& image);
 private:
@@ -97,5 +100,13 @@ private:
 	void PrintConfig(const map<string, string> & m);
 	string FindInConfig(map<string, string> m, string key);
 	void String2map(const string& s, map<int, double> &m, const string& c);
+
+public:
+  std::condition_variable april_process_cv;
+  std::mutex              april_process_mt;
+
+  bool be_processing;
+
+  bool m_draw; // draw image and April tag detections?
 };
 #endif

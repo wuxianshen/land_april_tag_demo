@@ -1,4 +1,4 @@
-namespace vision_defs
+namespace landing_vision_defs
 {
 #pragma push(1)
 	typedef struct _land_mark_pos

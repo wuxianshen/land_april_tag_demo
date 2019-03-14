@@ -236,7 +236,7 @@ void AprilTag::setup()
 	m_tagDetector = new AprilTags::TagDetector(m_tagCodes);
 	if (m_draw)
 	{
-		cv::namedWindow(windowName, 1);
+		//cv::namedWindow(windowName, 1);
 	}
 }
 
@@ -247,7 +247,7 @@ void AprilTag::get_position(AprilTags::TagDetection& detection)
 	p = m_size.find(detection.id);
 	if (p != m_size.end())
 	{
-		vision_defs::land_mark_pos land_mark_temp;
+		landing_vision_defs::land_mark_pos land_mark_temp;
 		//cout << "  Id: " << detection.id
 			//<< " (Hamming: " << detection.hammingDistance << ")";
 		Eigen::Vector3d translation;
@@ -295,19 +295,27 @@ void AprilTag::processImage(cv::Mat& image, cv::Mat& image_gray)
 			// also highlight in the image
 			detections[i].draw(image);
 		}
-		imshow(windowName, image); // OpenCV call
+		//cv::namedWindow(windowName, 1);
+		//imshow(windowName, image); // OpenCV call
+		//cv::waitKey(1);
 	}
 }
 
 // Load and process a single image
 int AprilTag::loadImages(cv::Mat& image)
 {
+  if ( be_processing == true )
+  {
+    return -1;
+  }
+  be_processing = true;
 	if (image.size() != cv::Size( m_width,m_height))
 	{
 		cv::resize(image, image, cv::Size(m_width, m_height));
 	}
 	cv::Mat image_gray;
 	processImage(image, image_gray);
+	be_processing = false;
 	return 0;
 }
 
