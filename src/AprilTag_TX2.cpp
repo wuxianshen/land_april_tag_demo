@@ -316,6 +316,11 @@ int AprilTag::loadImages(cv::Mat& image)
 	cv::Mat image_gray;
 	processImage(image, image_gray);
 	be_processing = false;
+	{
+		std::lock_guard<std::mutex> auto_lock(img_event_mu);
+	}
+	img_event_cv.notify_one();
+
 	return 0;
 }
 

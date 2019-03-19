@@ -108,5 +108,8 @@ public:
   bool be_processing;
 
   bool m_draw; // draw image and April tag detections?
+
+  std::mutex 							img_event_mu;
+  std::condition_variable img_event_cv;
 };
 #endif
