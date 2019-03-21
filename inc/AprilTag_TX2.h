@@ -85,7 +85,7 @@ public:
 		be_processing(false)
 	{}
 	vector<landing_vision_defs::land_mark_pos> pos_vec;
-	void parseOptions(int argc = 0, char* argv[] = nullptr);
+	void parseOptions(std::string config_path = std::string("landmark.cfg"), int argc = 0, char* argv[] = nullptr);
 	void setup();
 	int loadImages(cv::Mat& image);
 private:

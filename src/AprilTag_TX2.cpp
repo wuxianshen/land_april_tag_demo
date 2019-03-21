@@ -211,9 +211,10 @@ void AprilTag::setTagCodes(string s) {
 }
 
 // parse command line options to change default behavior
-void AprilTag::parseOptions(int argc, char* argv[])
+void AprilTag::parseOptions(std::string config_path, int argc, char* argv[])
 {
-	ReadConfig("landmark.cfg", LandMarkCfg);
+	//ReadConfig("landmark.cfg", LandMarkCfg);
+	ReadConfig(config_path, LandMarkCfg);
 	PrintConfig(LandMarkCfg);
 	MarkSizeStr = FindInConfig(LandMarkCfg, "m_size");
 	String2map(MarkSizeStr, m_size, ",");
@@ -280,7 +281,7 @@ void AprilTag::processImage(cv::Mat& image, cv::Mat& image_gray)
 	startTime = clock();
 	detections = m_tagDetector->extractTags(image_gray);
 	endTime = clock();
-	cout << "Every frame time is: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+	// cout << "Every frame time is: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
 	// print out each detection
 	pos_vec.clear();//If you need to keep pos_vec, write it under the if statement; 
 	if (detections.size()>0)
