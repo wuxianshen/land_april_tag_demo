@@ -5,7 +5,7 @@ int main(int argc, char* argv[])
 	AprilTag demo;
 	cv::Mat image;
 	// process command line options
-	demo.parseOptions(argc, argv);
+	demo.parseOptions("/home/nvidia/jav_config/landmark.cfg", argc, argv);
 	demo.setup();
 	cout << "Processing image" << endl;
 	cv::VideoCapture m_cap("../../res/test.mp4");
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 		if (cv::waitKey(1) >= 0) break;
 		frame++;
 		cout << demo.pos_vec.size() << " tags detected:" << endl;
-		for (vector<vision_defs::land_mark_pos>::size_type i = 0; i != demo.pos_vec.size(); i ++)
+		for (vector<landing_vision_defs::land_mark_pos>::size_type i = 0; i != demo.pos_vec.size(); i ++)
 		{
 			cout << "Id=" << demo.pos_vec[i].mark_id
 				<< " distance=" << demo.pos_vec[i].distance
