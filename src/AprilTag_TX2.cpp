@@ -1,7 +1,6 @@
 
 
-#include "AprilTag_TX2.h"
-
+#include"AprilTag_TX2.h"
 #include <fstream>
 
 inline double standardRad(double t) {
@@ -223,12 +222,14 @@ void AprilTag::parseOptions(std::string config_path, int argc, char* argv[])
 	setTagCodes(LandMarkCfg.find("setTagCodes")->second);
 
 	//intrinsic parameters
-	m_width = double(atof(LandMarkCfg.find("m_width")->second.c_str()));
-	m_px = m_width / 2;
-	m_height = double(atof(LandMarkCfg.find("m_height")->second.c_str()));
-	m_py = m_height / 2;
-	m_fx = double(atof(LandMarkCfg.find("m_fx")->second.c_str()));
-	m_fy = double(atof(LandMarkCfg.find("m_fy")->second.c_str()));//focal length
+	c_width = int(atof(LandMarkCfg.find("c_width")->second.c_str()));
+	c_height = int(atof(LandMarkCfg.find("c_height")->second.c_str()));
+	m_width = int(atof(LandMarkCfg.find("m_width")->second.c_str()));
+	m_height = int(atof(LandMarkCfg.find("m_height")->second.c_str()));
+	m_py = double(atof(LandMarkCfg.find("m_py")->second.c_str()))*((double)m_height / c_height);
+	m_px = double(atof(LandMarkCfg.find("m_px")->second.c_str()))*((double)m_width / c_width);
+	m_fx = double(atof(LandMarkCfg.find("m_fx")->second.c_str()))*((double)m_width / c_width);
+	m_fy = double(atof(LandMarkCfg.find("m_fy")->second.c_str()))*((double)m_height / c_height);//focal length
 
 }
 

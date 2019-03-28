@@ -43,6 +43,8 @@ public:
 	//  bool m_arduino; // send tag detections to serial port?
 	bool m_timing; // print timing information for each tag extraction call
 
+	int c_width;
+	int c_height;
 	int m_width; // image size in pixels
 	int m_height;
 	double m_tagSize; // April tag side length in meters of square black frame
@@ -68,6 +70,8 @@ public:
 		m_tagCodes(AprilTags::tagCodes36h11),
 		m_draw(true),
 		m_timing(false),
+		c_width(1920),
+		c_height(1080),
 		m_width(640),
 		m_height(360),
 		m_tagSize(0.166),
