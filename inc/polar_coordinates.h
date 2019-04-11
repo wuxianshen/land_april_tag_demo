@@ -15,15 +15,16 @@
 class polar_coordinates
 {
 public:
-  double dx;
-  double dy;
-  void rotate(double yaw);
-  polar_coordinates(double x, double y);
+	double r_polar;
+	double theta;
+	void rotate(double yaw);
+	polar_coordinates(double  r_polar, double theta);
+	double getdx();
+	double getdy();
 private:
-  double polar;
-  double theta;
-  void rec_coordinates2Polar();
-  void Polar2rec_coordinates();
+	double dx;
+	double dy;
+	void polar2rec_coordinates(double yaw);
 };
 
 #endif //LAND_PROJECT_POLAR_COORDINATES_H

@@ -11,27 +11,29 @@
 #include "polar_coordinates.h"
 #include <math.h>
 
-void polar_coordinates::rec_coordinates2Polar()
+void polar_coordinates::polar2rec_coordinates(double yaw)
 {
-  polar = sqrt(pow(dx, 2) + pow(dy, 2));
-  theta = atan2(dx, dy);
-}
-
-void polar_coordinates::Polar2rec_coordinates()
-{
-  dx = polar*sin(theta);
-  dy = polar*cos(theta);
+	dx = r_polar*sin(theta+yaw);
+	dy = r_polar*cos(theta+yaw);
 }
 
 void polar_coordinates::rotate(double yaw)
 {
-  rec_coordinates2Polar();
-  theta = theta + yaw;
-  Polar2rec_coordinates();
+	polar2rec_coordinates(yaw);
 }
 
-polar_coordinates::polar_coordinates(double x, double y)
+polar_coordinates::polar_coordinates(double r_polar, double theta)
 {
-  dx = x;
-  dy = y;
+	polar_coordinates::r_polar = r_polar;
+	polar_coordinates::theta = theta;
+}
+
+double polar_coordinates::getdx()
+{
+	return dx;
+}
+
+double polar_coordinates::getdy()
+{
+	return dy;
 }
